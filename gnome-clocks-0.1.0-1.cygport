@@ -1,0 +1,9 @@
+inherit python-distutils gnome.org
+
+CATEGORY="Gnome"
+SUMMARY="Clocks application for GNOME"
+HOMEPAGE="http://live.gnome.org/Clocks"
+
+DEPEND="python(DistUtilsExtra)"
+
+REQUIRES="girepository-GtkClutter1.0 girepository-Notify0.7 girepository-GWeather3.0"
