@@ -2,7 +2,7 @@ inherit python-distutils gnome.org
 
 NAME="gnome-clocks"
 VERSION=0.1.5
-RELEASE=1
+RELEASE=2
 CATEGORY="GNOME"
 SUMMARY="Clocks application for GNOME"
 HOMEPAGE="http://live.gnome.org/Clocks"
