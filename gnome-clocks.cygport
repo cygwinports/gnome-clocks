@@ -2,11 +2,13 @@ inherit gnome2
 
 NAME="gnome-clocks"
 VERSION=3.8.2
-RELEASE=1
+RELEASE=2
 CATEGORY="GNOME"
 SUMMARY="GNOME world clock and timer application"
 DESCRIPTION="A simple clock application for GNOME. It includes world clocks,
 alarms, a stopwatch and a timer."
 HOMEPAGE="http://live.gnome.org/GnomeClocks"
+
+PATCH_URI="3.8.2-glib-gettext.patch"
 
 ACLOCAL_FLAGS="-I libgd"
