@@ -1,0 +1,63 @@
+GeoClue2 is not working yet.  Users will have to enter their own location
+themselves.
+
+--- origsrc/gnome-clocks-3.22.1/Makefile.am	2016-10-08 05:34:32.000000000 -0500
++++ src/gnome-clocks-3.22.1/Makefile.am	2017-03-17 12:10:34.973607700 -0500
+@@ -92,7 +92,6 @@ AM_VALAFLAGS = \
+ 	--pkg gweather-3.0 \
+ 	--pkg gsound \
+ 	--pkg geocode-glib-1.0 \
+-	--pkg Geoclue-2.0 \
+ 	--gresources  $(top_srcdir)/data/gnome-clocks.gresource.xml
+ 
+ bin_PROGRAMS = gnome-clocks
+@@ -114,7 +113,6 @@ VALA_SOURCES = \
+ 	src/timer.vala \
+ 	src/utils.vala \
+ 	src/widgets.vala \
+-	src/geocoding.vala \
+ 	src/search-provider.vala \
+ 	src/main.vala
+ 
+--- origsrc/gnome-clocks-3.22.1/configure.ac	2016-10-10 01:36:23.000000000 -0500
++++ src/gnome-clocks-3.22.1/configure.ac	2017-03-17 12:10:01.776782700 -0500
+@@ -56,7 +56,6 @@ PKG_CHECK_MODULES(CLOCKS, [
+     gweather-3.0 >= 3.13.91
+     gnome-desktop-3.0 >= 3.7.90
+     geocode-glib-1.0 >= 0.99.4
+-    libgeoclue-2.0 >= 2.3.1
+ ])
+ 
+ YELP_HELP_INIT
+--- origsrc/gnome-clocks-3.22.1/src/world.vala	2016-10-10 01:35:22.000000000 -0500
++++ src/gnome-clocks-3.22.1/src/world.vala	2017-03-17 12:11:21.435021200 -0500
+@@ -301,11 +301,13 @@ public class Face : Gtk.Stack, Clocks.Cl
+         load ();
+         show_all ();
+ 
++#if GEOCLUE
+         if (settings.get_boolean ("geolocation")) {
+             use_geolocation.begin ((obj, res) => {
+                 use_geolocation.end (res);
+             });
+         }
++#endif
+ 
+         locations.items_changed.connect ((position, removed, added) => {
+             save ();
+@@ -361,6 +363,7 @@ public class Face : Gtk.Stack, Clocks.Cl
+         settings.set_value ("world-clocks", locations.serialize ());
+     }
+ 
++#if GEOCLUE
+     private async void use_geolocation () {
+         Geo.Info geo_info = new Geo.Info ();
+ 
+@@ -382,6 +385,7 @@ public class Face : Gtk.Stack, Clocks.Cl
+ 
+         yield geo_info.seek ();
+     }
++#endif
+ 
+     private void add_location_item (Item item) {
+         locations.add (item);

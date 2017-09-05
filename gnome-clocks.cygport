@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnome-clocks"
-VERSION=3.18.0
+VERSION=3.22.1
 RELEASE=1
 CATEGORY="GNOME"
 SUMMARY="GNOME world clock and timer application"
@@ -9,7 +9,7 @@ DESCRIPTION="A simple clock application for GNOME. It includes world clocks,
 alarms, a stopwatch and a timer."
 HOMEPAGE="http://live.gnome.org/GnomeClocks"
 
-PATCH_URI="
-	3.8.2-glib-gettext.patch
-	3.18.0-vpath.patch
-"
+PATCH_URI="3.22.1-without-geoclue.patch"
+
+# sources regenerated with valac
+DIFF_EXCLUDES="*.c"
