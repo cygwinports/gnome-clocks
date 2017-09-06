@@ -3,14 +3,6 @@ themselves.
 
 --- origsrc/gnome-clocks-3.22.1/Makefile.am	2016-10-08 05:34:32.000000000 -0500
 +++ src/gnome-clocks-3.22.1/Makefile.am	2017-03-17 12:10:34.973607700 -0500
-@@ -92,7 +92,6 @@ AM_VALAFLAGS = \
- 	--pkg gweather-3.0 \
- 	--pkg gsound \
- 	--pkg geocode-glib-1.0 \
--	--pkg Geoclue-2.0 \
- 	--gresources  $(top_srcdir)/data/gnome-clocks.gresource.xml
- 
- bin_PROGRAMS = gnome-clocks
 @@ -114,7 +113,6 @@ VALA_SOURCES = \
  	src/timer.vala \
  	src/utils.vala \
