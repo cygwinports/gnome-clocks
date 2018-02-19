@@ -1,0 +1,60 @@
+--- origsrc/gnome-clocks-3.26.1/meson.build	2017-10-15 07:22:56.000000000 -0500
++++ src/gnome-clocks-3.26.1/meson.build	2018-02-14 01:22:58.958965500 -0600
+@@ -17,7 +17,6 @@ gsound = dependency('gsound', version: '
+ gweather = dependency('gweather-3.0', version: '>=3.14')
+ gnomedesktop = dependency('gnome-desktop-3.0', version: '>=3.8')
+ geocodeglib = dependency('geocode-glib-1.0', version: '>=1.0')
+-libgeoclue = dependency('libgeoclue-2.0', version: '>=2.4')
+ 
+ cc = meson.get_compiler('c')
+ math = cc.find_library('m', required: false)
+--- origsrc/gnome-clocks-3.26.1/src/meson.build	2017-10-15 07:22:56.000000000 -0500
++++ src/gnome-clocks-3.26.1/src/meson.build	2018-02-14 01:23:16.664893400 -0600
+@@ -6,7 +6,6 @@ clocks_vala_sources = [
+   'alarm.vala',
+   'application.vala',
+   'clock.vala',
+-  'geocoding.vala',
+   'main.vala',
+   'search-provider.vala',
+   'stopwatch.vala',
+@@ -49,7 +48,6 @@ clocks_dependencies = [
+   gweather,
+   gnomedesktop,
+   geocodeglib,
+-  libgeoclue,
+   math
+ ]
+ 
+--- origsrc/gnome-clocks-3.26.1/src/world.vala	2017-10-15 07:22:56.000000000 -0500
++++ src/gnome-clocks-3.26.1/src/world.vala	2018-02-14 01:23:38.427680000 -0600
+@@ -341,11 +341,13 @@ public class Face : Gtk.Stack, Clocks.Cl
+         load ();
+         show_all ();
+ 
++#if GEOCLUE
+         if (settings.get_boolean ("geolocation")) {
+             use_geolocation.begin ((obj, res) => {
+                 use_geolocation.end (res);
+             });
+         }
++#endif
+ 
+         locations.items_changed.connect ((position, removed, added) => {
+             save ();
+@@ -401,6 +403,7 @@ public class Face : Gtk.Stack, Clocks.Cl
+         settings.set_value ("world-clocks", locations.serialize ());
+     }
+ 
++#if GEOCLUE
+     private async void use_geolocation () {
+         Geo.Info geo_info = new Geo.Info ();
+ 
+@@ -421,6 +424,7 @@ public class Face : Gtk.Stack, Clocks.Cl
+ 
+         yield geo_info.seek ();
+     }
++#endif
+ 
+     private void add_location_item (Item item) {
+         locations.add (item);
